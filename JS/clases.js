@@ -1,33 +1,58 @@
 //CONSTRUCTOR
-class miBajo {
-    constructor (id, prodcuto, marca, modelo, precio, imagen, cantidad) {
-        this.id = id;
-        this.prodcuto = prodcuto;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.precio = precio;
-        this.imagen= imagen;
-        this.cantidad = cantidad;
-    };
-};
-
 class prodDelCarrito {
-    constructor (id, prodcuto, marca, modelo, precio, imagen, cantidad) {
+    constructor (id, producto, marca, modelo, precio, imagen) {
         this.id = id;
-        this.prodcuto = prodcuto;
+        this.producto = producto;
         this.marca = marca;
         this.modelo = modelo;
         this.precio = precio;
         this.imagen= imagen;
-        this.cantidad = cantidad;
+        this.cantidad = 1;
         this.agregado = false;
     };
+
+    aumentarCantidad () {
+        this.cantidad+=1;
+        return this.cantidad;
+    };
+
+    decrementarCantidad () {
+        if (this.cantidad > 1) {
+            this.cantidad-=1;
+        };
+        return this.cantidad;
+    }
+    
     agregar () {
         if (this.agregado === false){
             this.agregado = true;
         };
     };
 };
+
+
+class Carrito {
+    cantidad = 0;
+    
+    incrementarCarrito () {
+        this.cantidad +=1;
+        span.innerHTML=`<span class="cart__count">${this.cantidad}</span>`;
+    };
+
+    decrementarCarrito () {
+        if (this.cantidad > 0){
+            this.cantidad -=1;
+            span.innerHTML=`<span class="cart__count">${this.cantidad}</span>`;
+        };
+    };
+
+    resetearCarrito (){
+        this.cantidad = 0;
+        span.innerHTML=`<span class="cart__count">${this.cantidad}</span>`;
+    };
+};
+
+
 
 
 

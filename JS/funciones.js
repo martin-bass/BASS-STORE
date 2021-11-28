@@ -5,10 +5,6 @@ $(document).ready(function () {
 
 async function funcionCascaron (){
     await cargarProductos();
-
-    bajoElegido = productos.map (function (i){
-        return [(i.id),(i.producto),(i.marca),(i.modelo),(i.precio),(i.imagen),0]
-    });
 };
 
 async function cargarProductos (){  //Levantamos los archivos del JSON y pintamos los cards
@@ -18,7 +14,7 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                 
                 productos=data;
                 for (producto of productos) {
-                    productosDelSitio.push(producto);
+                    
                     $(".cards").append(
                         `<div class="card card2">
                             <div class="cont-img">
@@ -41,8 +37,12 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                     $(`#btn${producto.id}`).click((e)=> {   //Boton para agregar prodcutos
                     e.preventDefault();
                     eleccionBajo(indice);
-                    infoEnElDom();
-                    mensaje(e);
+                    
+                    if (vaAlDOM){
+                        infoEnElDom();
+                    };
+                    
+                    mensaje(e, indice);
                     });
                 };
             };
@@ -52,74 +52,86 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
 
 //****************FUNCIONES DE LOS CARDS*******************************************************
 
-function eleccionBajo(id) {     //Generra un objeto con el producto seleccionado
-    producto = new miBajo (bajoElegido[id][0], bajoElegido[id][1], bajoElegido[id][2], bajoElegido[id][3],bajoElegido[id][4],bajoElegido[id][5],1);
+function eleccionBajo(ind) {     //Generra un objeto con el producto seleccionado
+    for (const prod of productos) {
+        if (prod.id == ind) {
+            pdCarrito = new prodDelCarrito (prod.id, prod.producto, prod.marca, prod.modelo, prod.precio, prod.imagen);
+        };
+    };
     
-    span.innerHTML = `<span class="cart__count">${cuentaProductos+=1}</span>`
-    return producto;   
+    productosDelCarrito.push(pdCarrito);
+    validarRepeticion(pdCarrito);
+    carrito.incrementarCarrito();
+    
+    return pdCarrito
+};
+
+function validarRepeticion(obj) {
+    let contadorRepeticiones= 0;
+    
+    for (let i=0; i< productosDelCarrito.length; i++) {
+        if (obj.id == productosDelCarrito[i].id){
+            contadorRepeticiones +=1;
+        };  
+        if (contadorRepeticiones>1){
+            alert("Este producto ya fue agregado. Por favor modifique la cantidad desde el carrito de compras");
+            productosDelCarrito.splice(i,1);
+            carrito.decrementarCarrito();
+            vaAlDOM=false;
+        } else {
+            obj.agregar();
+            vaAlDOM=true;
+        }; 
+    };
 };
 
 function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipular sus cantidades
-    let pdCarrito = new prodDelCarrito (producto.id, producto.prodcuto, producto.marca, producto.modelo, producto.precio, producto.imagen, 1);
-    pdCarrito.agregar();
-    
-    productosDelCarrito.push(pdCarrito);
-
-    $("#cont-sidebar").prepend(
-                        `<ol id="${pdCarrito.id}" class="list-group prod-seleccionado${pdCarrito.id}">
-                            <li class="list-group-item d-flex align-items-start">
-                            <div class="ms-1 me-auto">
-                                <div class="fw-bold">${pdCarrito.prodcuto} ${pdCarrito.marca}</div>
-                                <p>$${pdCarrito.precio}</p>
-                                <img src="${pdCarrito.imagen}" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="trash">
-                                <span id="badge${pdCarrito.id}" class="badge bg-primary rounded-pill">Cantidad: ${pdCarrito.cantidad}</span>
-                                <div class="MasMenos">
-                                    <i type="button" id="menos${pdCarrito.id}" class="fas fa-minus-square"></i>
-                                    <i id="mas${pdCarrito.id}" class="fas fa-plus-square"></i>
-                                </div>
-                                <i id="btn-trash${pdCarrito.id}" class="far fa-trash-alt" onclick="eliminarDelCarrito(this);"></i>
-                            </div>
-                            </li>
-                        </ol>`
+    //console.log(pdCarrito)
+     $("#cont-sidebar").prepend(
+        `<ol id="${pdCarrito.id}" class="list-group prod-seleccionado${pdCarrito.id}">
+            <li class="list-group-item d-flex align-items-start">
+            <div class="ms-1 me-auto">
+                <div class="fw-bold">${pdCarrito.producto} ${pdCarrito.marca}</div>
+                <p>$${pdCarrito.precio}</p>
+                <img src="${pdCarrito.imagen}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="trash">
+                <span id="badge${pdCarrito.id}" class="badge bg-primary rounded-pill">Cantidad: ${pdCarrito.cantidad}</span>
+                <div class="MasMenos">
+                    <i type="button" id="menos${pdCarrito.id}" class="fas fa-minus-square"></i>
+                    <i id="mas${pdCarrito.id}" class="fas fa-plus-square"></i>
+                </div>
+                <i id="btn-trash${pdCarrito.id}" class="far fa-trash-alt"></i>
+            </div>
+            </li>
+        </ol>`
     ); 
 
     //BOTON P/ELIMINAR PRODCUTO SELECCIONADO
-    document.getElementById("btn-trash"+`${pdCarrito.id}`).addEventListener("click", (e) =>{
-        e.preventDefault();
-        indiceParaEliminar= e.target.parentNode.parentNode.parentNode.id;
-        eliminarDelArray(indiceParaEliminar);
+    $(`#btn-trash${pdCarrito.id}`).click( (e) => { 
+    e.preventDefault();
+    let indiceParaEliminar= e.target.parentNode.parentNode.parentNode.getAttribute("id");
+    eliminarDelCarrito(e.target, indiceParaEliminar);
+    eliminarDelArray(indiceParaEliminar);
     });
 
-    
-    $(`#btn-trash${pdCarrito.id}`).click( (e) => { 
-        e.preventDefault();
-        eliminarDelCarrito(e.target);
-    });
-    
     //BOTON PARA DECREMENTAR CANTIDAD DEL PROCUTO SELECCIONADO
-    $(`#menos${producto.id}`).click( (e) => { 
+    $(`#menos${pdCarrito.id}`).click( (e) => { 
         e.preventDefault();
-        if (pdCarrito.cantidad===1){
-            e.target.style.visibility="hidden".toggle;
-        }else{
+        let identificador= e.target.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
+
+        for (const prod in productosDelCarrito) {
+            if (productosDelCarrito[prod].cantidad==1){
+                e.target.style.visibility="hidden".toggle;
+            }else{
+                if (identificador == productosDelCarrito[prod].id){
+                    productosDelCarrito[prod].decrementarCantidad();
+
+                    carrito.decrementarCarrito();
             
-            for (const prod in productosDelCarrito){
-                if (parseInt(`${pdCarrito.id}`)=== productosDelCarrito[prod].id){
-                    let contenido= e.target.parentNode.parentNode.childNodes[1].textContent ="Cantidad: "+`${pdCarrito.cantidad-=1}`;
-                    document.getElementById(`badge${pdCarrito.id}`).innerHTML= contenido;
+                    let contenido= e.target.parentNode.parentNode.childNodes[1].textContent ="Cantidad: "+`${productosDelCarrito[prod].cantidad}`;
+                    document.getElementById(`badge${identificador}`).innerHTML= contenido;
                 };
-            };
-            span.innerHTML=`<span class="cart__count">${cuentaProductos-=1}</span>`;
-        
-            if (cuentaProductos<= 0){ //Evita que el carrito de numero negativo
-                cuentaProductos=0;
-                span.innerHTML=`<span class="cart__count">${cuentaProductos}</span>`; 
-            };
-            if (pdCarrito.cantidad<= 1) { //Evita que la catidad de cada item dé negativo
-                pdCarrito.cantidad = 1;
-                document.getElementById(`badge${pdCarrito.id}`).innerHTML="Cantidad: "+ 1;
             };
         };
     });
@@ -127,45 +139,49 @@ function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipul
     //BOTON PARA INCREMENTAR CANTIDAD DEL PROCUTO SELECCIONADO
     $(`#mas${pdCarrito.id}`).click( (e) => { 
         e.preventDefault();
-        cuentaProductos+=1;
-        span.innerHTML=`<span class="cart__count">${cuentaProductos}</span>`;
+        carrito.incrementarCarrito();
+
+        let identificador= e.target.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
         for (const prod in productosDelCarrito){
-            if (parseInt(`${pdCarrito.id}`)=== productosDelCarrito[prod].id){
-                let contenido= e.target.parentNode.parentNode.childNodes[1].textContent ="Cantidad: "+`${pdCarrito.cantidad+=1}`;
-                document.getElementById(`badge${pdCarrito.id}`).innerHTML= contenido;
+            if (identificador == productosDelCarrito[prod].id){
+                productosDelCarrito[prod].aumentarCantidad();
+        
+                let contenido= e.target.parentNode.parentNode.childNodes[1].textContent ="Cantidad: "+`${productosDelCarrito[prod].cantidad}`;
+                document.getElementById(`badge${identificador}`).innerHTML= contenido;
             };
         };
     });
-
-    return pdCarrito;
 };
 
-function eliminarDelCarrito(valor) {        //Elimina elementos de carrito en DOM 
+function eliminarDelCarrito(valor, elimina) {        //Elimina elementos de carrito en DOM 
     $(valor).parent().parent().parent().remove();
-    span.innerHTML = `<span class="cart__count">${cuentaProductos -= parseInt(valor.parentNode.childNodes[1].textContent[10])}</span>`;
-    if (cuentaProductos<= 0){
-        cuentaProductos=0;
-        span.innerHTML=`<span class="cart__count">${cuentaProductos}</span>`; 
-    }
+    
+    for (const prod in productosDelCarrito){
+            if (elimina == productosDelCarrito[prod].id){
+                carrito.cantidad -= parseInt(productosDelCarrito[prod].cantidad);
+                span.innerHTML = `<span class="cart__count">${carrito.cantidad}</span>`;
+            };
+    };
 };
 
 function eliminarDelArray(num) {
     for (let i=0; i < productosDelCarrito.length; i++){   //Elimina el prod del array de compras
         if (productosDelCarrito[i].id == num) {
             productosDelCarrito.splice(i,1);
+            break;
         };
+        
     };
 
     let sidebar= document.getElementById("cont-sidebar");  // Se segura que si el contenedor esta vacio se elimine el array de compras
     if (sidebar.hasChildNodes()==false){
         productosDelCarrito=[];
-        cuentaProductos = 0;
-        span.innerHTML=`<span class="cart__count">${cuentaProductos}</span>`;
+        carrito.resetearCarrito();
     };
 };
 
-function mensaje(valor){        // Muestra un mensaje cada vez que se agrega un producto
-    $(`#msjAgregado${producto.id}`).append('<p class="mensaje">Producto agregado!</p>');
+function mensaje(valor, ind){        // Muestra un mensaje cada vez que se agrega un producto
+    $(`#msjAgregado${ind}`).append('<p class="mensaje">Producto agregado!</p>');
     $(valor.target.parentNode.parentNode.childNodes[7].children).fadeOut(2000)
 };
 
@@ -206,7 +222,7 @@ function mostrarCompraFinal (){
     aPagar.appendChild(ul);
     for (let i=0; i < productosDelCarrito.length; i++){
         let li= document.createElement('li')
-        li.innerHTML= `${productosDelCarrito[i].prodcuto} ${productosDelCarrito[i].marca} ${productosDelCarrito[i].modelo}\nPrecio Unitario: $${productosDelCarrito[i].precio} \nCantidad: ${productosDelCarrito[i].cantidad}`;
+        li.innerHTML= `${productosDelCarrito[i].producto} ${productosDelCarrito[i].marca} ${productosDelCarrito[i].modelo}\nPrecio Unitario: $${productosDelCarrito[i].precio} \nCantidad: ${productosDelCarrito[i].cantidad}`;
         ul.appendChild(li);
     };
     
