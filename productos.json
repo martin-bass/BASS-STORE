@@ -84,9 +84,9 @@
     "imagen":"/img/cards/pedal2.png"},
 
     {"id": 12,
-    "producto": "Bajo Acústico",
+    "producto": "Bajo",
     "marca": "Fender", 
-    "modelo": "Cb-60sce", 
+    "modelo": "Bajo Acústico Cb-60sce", 
     "precio": 80000,
     "imagen":"/img/cards/acustico.png"},
 

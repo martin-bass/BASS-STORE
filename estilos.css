@@ -188,6 +188,13 @@ hr {
     color: #fff !important;
 }
 
+/*SWEET ALERT*/
+
+.p-sweetAlert{
+    color: #fff;
+}
+
+
 /*MARCAS*/
 .marcas {
     height: 570px;

@@ -18,8 +18,7 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                     $(".cards").append(
                         `<div class="card card2">
                             <div class="cont-img">
-                                <img src="${producto.imagen}" class="card-img-top img-responsive" alt="...">
-                                
+                                <img src="${producto.imagen}" class="card-img-top img-responsive" alt="...">     
                             </div>    
                             <div class="card-body card-productos">
                                 <h5 class="card-title">${producto.producto} ${producto.marca}</h5>
@@ -49,6 +48,49 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
         },
     );
 };
+//****************FILTROS POR CATEGORIAS******************************************************
+// function filtrarProductos(categoria) {
+//     let categoriaFiltrada= [];
+//     for (const producto of productos) {
+        
+//         if (producto.producto===categoria){
+//             categoriaFiltrada.push(producto)
+//         };
+//     };
+    
+//     for (const prod of categoriaFiltrada){
+//         $(".cards").append(
+//             `<div class="card card2">
+//                 <div class="cont-img">
+//                     <img src="${prod.imagen}" class="card-img-top img-responsive" alt="...">
+                    
+//                 </div>    
+//                 <div class="card-body card-productos">
+//                     <h5 class="card-title">${prod.producto} ${prod.marca}</h5>
+//                     <h6>$ ${prod.precio}</h6>
+//                     <p class="card-text">${prod.producto} ${prod.marca} ${prod.modelo}</B></p>
+//                     <div id="msjAgregado${prod.id}" class="msjAgregado"></div>
+//                     <div class="card-boton">
+//                         <a id="btn${prod.id}" href="#" class="btn btn-primary">Agregar</a>
+//                     </div>
+//                 </div>
+//             </div>`
+//         );
+//         let indice= `${prod.id}`;
+    
+//         $(`#btn${prod.id}`).click((e)=> {   //Boton para agregar prodcutos
+//         e.preventDefault();
+//         eleccionBajo(indice);
+//         console.log("holi")
+//         if (vaAlDOM){
+//             infoEnElDom();
+//         };
+        
+//         mensaje(e, indice);
+//         });
+//     };
+// };
+
 
 //****************FUNCIONES DE LOS CARDS*******************************************************
 
@@ -74,7 +116,15 @@ function validarRepeticion(obj) {
             contadorRepeticiones +=1;
         };  
         if (contadorRepeticiones>1){
-            alert("Este producto ya fue agregado. Por favor modifique la cantidad desde el carrito de compras");
+            Swal.fire({
+                icon: 'error',
+                title: '<h2 class="p-sweetAlert">Producto Repetido</h2>',
+                html: '<p class="p-sweetAlert">Este producto ya fue agregado. Por favor modifique la cantidad desde el carrito de compras</p>',
+                background: '#777',
+                position:'center',
+                allowOutsideClick: true
+            });
+            
             productosDelCarrito.splice(i,1);
             carrito.decrementarCarrito();
             vaAlDOM=false;
