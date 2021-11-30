@@ -48,48 +48,6 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
         },
     );
 };
-//****************FILTROS POR CATEGORIAS******************************************************
-// function filtrarProductos(categoria) {
-//     let categoriaFiltrada= [];
-//     for (const producto of productos) {
-        
-//         if (producto.producto===categoria){
-//             categoriaFiltrada.push(producto)
-//         };
-//     };
-    
-//     for (const prod of categoriaFiltrada){
-//         $(".cards").append(
-//             `<div class="card card2">
-//                 <div class="cont-img">
-//                     <img src="${prod.imagen}" class="card-img-top img-responsive" alt="...">
-                    
-//                 </div>    
-//                 <div class="card-body card-productos">
-//                     <h5 class="card-title">${prod.producto} ${prod.marca}</h5>
-//                     <h6>$ ${prod.precio}</h6>
-//                     <p class="card-text">${prod.producto} ${prod.marca} ${prod.modelo}</B></p>
-//                     <div id="msjAgregado${prod.id}" class="msjAgregado"></div>
-//                     <div class="card-boton">
-//                         <a id="btn${prod.id}" href="#" class="btn btn-primary">Agregar</a>
-//                     </div>
-//                 </div>
-//             </div>`
-//         );
-//         let indice= `${prod.id}`;
-    
-//         $(`#btn${prod.id}`).click((e)=> {   //Boton para agregar prodcutos
-//         e.preventDefault();
-//         eleccionBajo(indice);
-//         console.log("holi")
-//         if (vaAlDOM){
-//             infoEnElDom();
-//         };
-        
-//         mensaje(e, indice);
-//         });
-//     };
-// };
 
 
 //****************FUNCIONES DE LOS CARDS*******************************************************
@@ -122,7 +80,8 @@ function validarRepeticion(obj) {
                 html: '<p class="p-sweetAlert">Este producto ya fue agregado. Por favor modifique la cantidad desde el carrito de compras</p>',
                 background: '#777',
                 position:'center',
-                allowOutsideClick: true
+                allowOutsideClick: "true",
+                customClass: "SeewAlert"
             });
             
             productosDelCarrito.splice(i,1);
@@ -157,7 +116,7 @@ function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipul
         </ol>`
     ); 
 
-    //BOTON P/ELIMINAR PRODCUTO SELECCIONADO
+    //BOTON P/ELIMINAR PRODUCTO SELECCIONADO
     $(`#btn-trash${pdCarrito.id}`).click( (e) => { 
     e.preventDefault();
     let indiceParaEliminar= e.target.parentNode.parentNode.parentNode.getAttribute("id");
@@ -165,7 +124,7 @@ function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipul
     eliminarDelArray(indiceParaEliminar);
     });
 
-    //BOTON PARA DECREMENTAR CANTIDAD DEL PROCUTO SELECCIONADO
+    //BOTON PARA DECREMENTAR CANTIDAD DEL PRODUCTO SELECCIONADO
     $(`#menos${pdCarrito.id}`).click( (e) => { 
         e.preventDefault();
         let identificador= e.target.parentNode.parentNode.parentNode.parentNode.getAttribute("id");
@@ -186,7 +145,7 @@ function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipul
         };
     });
 
-    //BOTON PARA INCREMENTAR CANTIDAD DEL PROCUTO SELECCIONADO
+    //BOTON PARA INCREMENTAR CANTIDAD DEL PRODUCTO SELECCIONADO
     $(`#mas${pdCarrito.id}`).click( (e) => { 
         e.preventDefault();
         carrito.incrementarCarrito();
@@ -229,6 +188,13 @@ function eliminarDelArray(num) {
         carrito.resetearCarrito();
     };
 };
+
+function limpiarCarritoEnDOM (){
+    let sidebar= document.getElementById("cont-sidebar");
+    sidebar.innerHTML=""
+    productosDelCarrito=[];
+};
+
 
 function mensaje(valor, ind){        // Muestra un mensaje cada vez que se agrega un producto
     $(`#msjAgregado${ind}`).append('<p class="mensaje">Producto agregado!</p>');
@@ -295,11 +261,34 @@ function validarFurmlario() {
     let mensaje=  document.getElementById("message").value;
 
     if (nombre=="" || email=="" || telefono=="" || asunto=="" || mensaje=="") {
-        alert ("Debes completar todos los campos");
+        Swal.fire({
+            icon: 'error',
+            title: '<h2 class="p-sweetAlert">Atención!</h2>',
+            html: '<p class="p-sweetAlert">Debes completar todos los campos.</p>',
+            background: '#777',
+            position:'center',
+            allowOutsideClick: true
+        });
     }else if (!(/^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email))) {
-        alert("Introduce un correo válido");
+        Swal.fire({
+            icon: 'error',
+            title: '<h2 class="p-sweetAlert">E-mail Incorrecto!</h2>',
+            html: '<p class="p-sweetAlert">Introduce un correo válido.</p>',
+            background: '#777',
+            position:'center',
+            allowOutsideClick: "true",
+            customClass: "SeewAlert"
+        });
     }else {
-        alert("Su mensaje ha sido enviado!\nA la brevedad te responderemos");
+        Swal.fire({
+            icon: 'success',
+            title: '<h2 class="p-sweetAlert">Mensaje Enviado!</h2>',
+            html: '<p class="p-sweetAlert">Su mensaje ha sido enviado!\nA la brevedad te responderemos</p>',
+            background: '#777',
+            position:'center',
+            allowOutsideClick: "true",
+            customClass: "SeewAlert"
+        });
         document.getElementById("form").reset();
     };
 };

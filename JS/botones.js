@@ -53,6 +53,8 @@ $(".btn-ConfirmarCompra").click(function (e) {
     $(".compraFinal").css({"display":"flex"});
     sumaFinal();
     mostrarCompraFinal();
+    carrito.resetearCarrito();
+    limpiarCarritoEnDOM();
 });
 
 $("#back").click(function (e) { 

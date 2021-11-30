@@ -1,5 +1,5 @@
 * {
-    box-sizing: border-box !important;
+    box-sizing: border-box ;
     margin: 0 ;
     padding: 0 !important;
 }
@@ -189,6 +189,10 @@ hr {
 }
 
 /*SWEET ALERT*/
+
+.SeewAlert{
+    box-sizing: none !important;
+}
 
 .p-sweetAlert{
     color: #fff;
