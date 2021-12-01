@@ -16,14 +16,14 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                 for (producto of productos) {
                     
                     $(".cards").append(
-                        `<div class="card card2">
+                        `<div class="card card2" id="${producto.id}">
                             <div class="cont-img">
                                 <img src="${producto.imagen}" class="card-img-top img-responsive" alt="...">     
                             </div>    
                             <div class="card-body card-productos">
                                 <h5 class="card-title">${producto.producto} ${producto.marca}</h5>
                                 <h6>$ ${producto.precio}</h6>
-                                <p class="card-text">${producto.producto} ${producto.marca} ${producto.modelo}</B></p>
+                                <p class="card-text">${producto.marca} ${producto.modelo}</B></p>
                                 <div id="msjAgregado${producto.id}" class="msjAgregado"></div>
                                 <div class="card-boton">
                                     <a id="btn${producto.id}" href="#" class="btn btn-primary">Agregar</a>
@@ -31,9 +31,19 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                             </div>
                         </div>`
                     );
+
+                    //ESTABLECEMOS CATEGORIAS PARA CADA TIPO DE PRODUCTO
+                    if (producto.producto==="Bajo"){
+                        $(`#${producto.id}`).addClass("Bajo");
+                    } else if (producto.producto==="Amplificador"){
+                        $(`#${producto.id}`).addClass("Amplificador");
+                    } else if (producto.producto==="Accesorio") {
+                        $(`#${producto.id}`).addClass("Accesorio")
+                    };
+                    
                     let indice= `${producto.id}`;
                 
-                    $(`#btn${producto.id}`).click((e)=> {   //Boton para agregar prodcutos
+                    $(`#btn${producto.id}`).click((e)=> {   //Boton para agregar productos
                     e.preventDefault();
                     eleccionBajo(indice);
                     
@@ -47,6 +57,27 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
             };
         },
     );
+};
+//****************FILTROS POR CATEGORIAS******************************************************
+function filtrarProductos(categoria) {
+    if (categoria==="Productos"){
+        
+        $(".Bajo").css({"display":"grid"});
+        $(".Amplificador").css({"display":"grid"});
+        $(".Accesorio").css({"display":"grid"});
+    }else if (categoria==="Bajo") {
+        $(".Bajo").css({"display":"grid"});
+        $(".Amplificador").css({"display":"none"});
+        $(".Accesorio").css({"display":"none"});
+    } else if (categoria==="Amplificador") {
+        $(".Bajo").css({"display":"none"});
+        $(".Amplificador").css({"display":"grid"});
+        $(".Accesorio").css({"display":"none"});
+    } else if (categoria==="Accesorio") {
+        $(".Bajo").css({"display":"none"});
+        $(".Amplificador").css({"display":"none"});
+        $(".Accesorio").css({"display":"grid"});
+    };
 };
 
 
@@ -193,6 +224,7 @@ function limpiarCarritoEnDOM (){
     let sidebar= document.getElementById("cont-sidebar");
     sidebar.innerHTML=""
     productosDelCarrito=[];
+    carrito.resetearCarrito();
 };
 
 

@@ -40,7 +40,7 @@ ul {
 }
 
 .nav-main {
-    font-size: 26px !important;
+    font-size: 23px !important;
     display: flex !important;
     justify-content:space-between !important;
     align-items: center !important;
@@ -89,7 +89,14 @@ hr {
     border: none;
 }
 
+#carrito > i{
+    font-size: 26px;
+    margin-top: 13px;
+    padding-left: 10px;
+}
+
 .cart__count {
+    right: 40px;
     font-size: 30px;
     color: #fff;
     background:crimson;
@@ -226,11 +233,10 @@ hr {
 /*CARDS*/
 .cards {
     margin-top: 20px;
-    height: auto;
-    border: 2px solid #fff;
+    height: auto; 
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: repeat(2, 1fr) !important;
+    gap: 10px;
     align-items: center !important;
 }
 
@@ -278,7 +284,6 @@ hr {
 }
 
 .msjAgregado{
-    
     margin-bottom: 10px;
     height: 20px !important;
 }
@@ -541,5 +546,12 @@ hr {
 #compraFinalizada  h3{
     margin: 10px;
     color: yellow;
+}
+
+/*CARDS FILTRADOS*/
+
+.ocultar-card {
+    display: none;
+    
 }
 

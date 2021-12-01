@@ -15,56 +15,82 @@ $("#marcas").click( (e)=> {
     },300);
 });
 
-$("#Bajos").click(function (e) { 
+$("#Prodcutos").click( (e) => { 
     e.preventDefault();
+    filtrarProductos("Productos");
+    // $('html,body').animate({
+    //     scrollTop:$('#SeccionCards').offset().top
+    // },300);
+    
+});
+
+$("#Bajos").click( (e)=> { 
+    e.preventDefault();
+    filtrarProductos("Bajo");
+    $('html,body').animate({
+        scrollTop:$('#SeccionCards').offset().top
+    },300);
+    
+});
+
+$("#Amplificadores").click( (e) =>{ 
+    e.preventDefault();
+    filtrarProductos("Amplificador");
+    $('html,body').animate({
+        scrollTop:$('#SeccionCards').offset().top
+    },300);
+    
+});
+
+$("#Accesorios").click( (e)=> { 
+    e.preventDefault();
+    filtrarProductos("Accesorio");
     $('html,body').animate({
         scrollTop:$('#SeccionCards').offset().top
     },300);
 });
 
-$("#Amplificadores").click(function (e) { 
-    e.preventDefault();
-    $('html,body').animate({
-        scrollTop:$('#SeccionCards').offset().top
-    },300);
-});
-
-$("#Accesorios").click(function (e) { 
-    e.preventDefault();
-    $('html,body').animate({
-        scrollTop:$('#SeccionCards').offset().top
-    },300);
-});
-
-$("#Contacto").click(function (e) { 
+$("#Contacto").click( (e)=> { 
     e.preventDefault();
     $('html,body').animate({
         scrollTop:$('#SeccionFormulario').offset().top
     },300);
 });
 
-$("#carrito").click(function (e) { 
+$("#carrito").click( (e)=> { 
     e.preventDefault();
     $("#sidebar").css({"right":"0px"}).toggle(500);
 });
 
-$(".btn-ConfirmarCompra").click(function (e) { 
+$(".btn-ConfirmarCompra").click( (e) =>{ 
     e.preventDefault();
-    $(".compraFinal").css({"display":"flex"});
-    sumaFinal();
-    mostrarCompraFinal();
-    carrito.resetearCarrito();
-    limpiarCarritoEnDOM();
+    let sidebar= document.getElementById("cont-sidebar"); 
+    if (sidebar.hasChildNodes()==false){
+        Swal.fire({
+            icon: 'error',
+            title: '<h2 class="p-sweetAlert">Atención!</h2>',
+            html: '<p class="p-sweetAlert">Al carrito de compras esta vacío.</p>',
+            background: '#777',
+            position:'center',
+            allowOutsideClick: true
+        });
+    }else {
+        $(".compraFinal").css({"display":"flex"});
+        sumaFinal();
+        mostrarCompraFinal();
+        limpiarCarritoEnDOM();
+    };
+    
 });
 
-$("#back").click(function (e) { 
+$("#back").click( (e)=> { 
     e.preventDefault();
     $(".compraFinal").css({"display":"none"});
     limpiarContenedor();
     localStorage.clear();
 });
 
-$("#enviaFormulario").click(function (e) { 
+$("#enviaFormulario").click( (e)=> { 
     e.preventDefault();
     validarFurmlario();
 });
