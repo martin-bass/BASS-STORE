@@ -15,12 +15,12 @@ $("#marcas").click( (e)=> {
     },300);
 });
 
-$("#Prodcutos").click( (e) => { 
+$("#Productos").click( (e) => { 
     e.preventDefault();
     filtrarProductos("Productos");
-    // $('html,body').animate({
-    //     scrollTop:$('#SeccionCards').offset().top
-    // },300);
+    $('html,body').animate({
+        scrollTop:$('#SeccionCards').offset().top
+    },300);
     
 });
 
@@ -78,9 +78,7 @@ $(".btn-ConfirmarCompra").click( (e) =>{
         $(".compraFinal").css({"display":"flex"});
         sumaFinal();
         mostrarCompraFinal();
-        limpiarCarritoEnDOM();
     };
-    
 });
 
 $("#back").click( (e)=> { 
@@ -88,6 +86,21 @@ $("#back").click( (e)=> {
     $(".compraFinal").css({"display":"none"});
     limpiarContenedor();
     localStorage.clear();
+});
+
+$(".finalizada").click( (e)=> { 
+    e.preventDefault();
+    Swal.fire({
+        icon: 'success',
+        title: '<h2 class="p-sweetAlert">Muchas gracias por tu compra!</h2>',
+        html: '<p class="p-sweetAlert">A la brevedad estarás disfrutando de tu pedido.</p>',
+        background: '#777',
+        position:'center',
+        allowOutsideClick: true
+    });
+    $(".compraFinal").css({"display":"none"});
+    document.getElementById("compraFinalizada").innerHTML=""
+    limpiarCarritoEnDOM();
 });
 
 $("#enviaFormulario").click( (e)=> { 

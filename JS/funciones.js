@@ -61,10 +61,7 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
 //****************FILTROS POR CATEGORIAS******************************************************
 function filtrarProductos(categoria) {
     if (categoria==="Productos"){
-        
-        $(".Bajo").css({"display":"grid"});
-        $(".Amplificador").css({"display":"grid"});
-        $(".Accesorio").css({"display":"grid"});
+        $(".card").css({"display":"grid"});
     }else if (categoria==="Bajo") {
         $(".Bajo").css({"display":"grid"});
         $(".Amplificador").css({"display":"none"});
@@ -79,7 +76,6 @@ function filtrarProductos(categoria) {
         $(".Accesorio").css({"display":"grid"});
     };
 };
-
 
 //****************FUNCIONES DE LOS CARDS*******************************************************
 
@@ -126,7 +122,6 @@ function validarRepeticion(obj) {
 };
 
 function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipular sus cantidades
-    //console.log(pdCarrito)
      $("#cont-sidebar").prepend(
         `<ol id="${pdCarrito.id}" class="list-group prod-seleccionado${pdCarrito.id}">
             <li class="list-group-item d-flex align-items-start">
@@ -210,7 +205,6 @@ function eliminarDelArray(num) {
             productosDelCarrito.splice(i,1);
             break;
         };
-        
     };
 
     let sidebar= document.getElementById("cont-sidebar");  // Se segura que si el contenedor esta vacio se elimine el array de compras
@@ -226,7 +220,6 @@ function limpiarCarritoEnDOM (){
     productosDelCarrito=[];
     carrito.resetearCarrito();
 };
-
 
 function mensaje(valor, ind){        // Muestra un mensaje cada vez que se agrega un producto
     $(`#msjAgregado${ind}`).append('<p class="mensaje">Producto agregado!</p>');
