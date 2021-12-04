@@ -109,5 +109,61 @@
     "marca": "Rickenbacker", 
     "modelo": "4003 MBL", 
     "precio": 150000,
-    "imagen":"/img/cards/rickenbacker.png"}
+    "imagen":"/img/cards/rickenbacker.png"},
+
+    {"id": 16,
+    "producto": "Amplificador",
+    "marca": "Ampeg", 
+    "modelo": "SVT-8100", 
+    "precio": 400000,
+    "imagen":"/img/cards/ampeg2.png"},
+
+    {"id": 17,
+    "producto": "Bajo",
+    "marca": "Yamaha", 
+    "modelo": "Trbx174dbm", 
+    "precio": 100000,
+    "imagen":"/img/cards/yamaha.png"},
+
+    {"id": 18,
+    "producto": "Accesorio",
+    "marca": "Fender", 
+    "modelo": "Estuche Rígido Fender ABS", 
+    "precio": 90000,
+    "imagen":"/img/cards/funda2.png"},
+
+    {"id": 19,
+    "producto": "Accesorio",
+    "marca": "Aguilar", 
+    "modelo": "Mics Aguilar Jazz Bass", 
+    "precio": 45000,
+    "imagen":"/img/cards/aguilar2.png"},
+
+    {"id": 20,
+    "producto": "Accesorio",
+    "marca": "Electro Harmonix", 
+    "modelo": "Pedal Big Muff", 
+    "precio": 25000,
+    "imagen":"/img/cards/pedal3.png"},
+
+    {"id": 21,
+    "producto": "Amplificador",
+    "marca": "Mark Bass", 
+    "modelo": "MARCUS MILLER 2X10 500W", 
+    "precio": 250000,
+    "imagen":"/img/cards/markbass2.png"},
+
+    {"id": 22,
+    "producto": "Bajo",
+    "marca": "Fender", 
+    "modelo": "P-Bass Fretless", 
+    "precio": 110000,
+    "imagen":"/img/cards/fenderPBass2.png"},
+
+    {"id": 23,
+    "producto": "Bajo",
+    "marca": "Fodera", 
+    "modelo": "Xi 5 String Single Cut Camphor Burl", 
+    "precio": 600000,
+    "imagen":"/img/cards/fodera.png"}
 ]
