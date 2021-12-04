@@ -61,25 +61,25 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
 //****************FILTROS POR CATEGORIAS******************************************************
 function filtrarProductos(categoria) {
     if (categoria==="Productos"){
-        $(".card").css({"display":"grid"});
+        $(".card").css({"display":"flex"});
     }else if (categoria==="Bajo") {
-        $(".Bajo").css({"display":"grid"});
+        $(".Bajo").css({"display":"flex"});
         $(".Amplificador").css({"display":"none"});
         $(".Accesorio").css({"display":"none"});
     } else if (categoria==="Amplificador") {
         $(".Bajo").css({"display":"none"});
-        $(".Amplificador").css({"display":"grid"});
+        $(".Amplificador").css({"display":"flex"});
         $(".Accesorio").css({"display":"none"});
     } else if (categoria==="Accesorio") {
         $(".Bajo").css({"display":"none"});
         $(".Amplificador").css({"display":"none"});
-        $(".Accesorio").css({"display":"grid"});
+        $(".Accesorio").css({"display":"flex"});
     };
 };
 
 //****************FUNCIONES DE LOS CARDS*******************************************************
 
-function eleccionBajo(ind) {     //Generra un objeto con el producto seleccionado
+function eleccionBajo(ind) {     //Genera un objeto con el producto seleccionado
     for (const prod of productos) {
         if (prod.id == ind) {
             pdCarrito = new prodDelCarrito (prod.id, prod.producto, prod.marca, prod.modelo, prod.precio, prod.imagen);
