@@ -101,6 +101,7 @@ $(".finalizada").click( (e)=> {
     $(".compraFinal").css({"display":"none"});
     document.getElementById("compraFinalizada").innerHTML=""
     limpiarCarritoEnDOM();
+    localStorage.clear();
 });
 
 $("#enviaFormulario").click( (e)=> { 
