@@ -565,5 +565,95 @@ hr {
     margin-left: 32%;
 }
 
+/*RESPONSIVE*/
+
+@media (max-width: 700px) {
+    .container {
+        width: 100% !important; 
+        margin-left: 45px !important;
+    }
+
+    .nav-main{
+        width: 700px !important;
+    }
+
+    ul.nav-menu {
+        display: none !important;
+    }
+    
+    .nav-brand{
+        width: 60px !important;
+        margin-left: 10px !important;
+    }
+
+    .carrousel{
+        width: 600px !important;
+        height: 252px !important;
+        margin-top: 100px !important;
+        margin-left: 1px;
+    }
+
+    .carrousel img{
+        height: 250px !important;
+        border: 2px solid #fff;
+    }
+
+    .marcas {
+        width: 600px !important;
+        height: 250px;
+        border: 2px solid #fff;
+        margin-top: 20px;
+    }
+
+    .container-marcas img {
+        width: 120px;
+    }
+
+    .cards {
+        margin-top: 20px;
+        margin-left: 40px;
+        height: auto; 
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px;
+        align-items: center !important;
+        visibility: visible;
+    }
+
+    .form{
+        height: 240px !important;
+        margin-left: 10% !important;
+    }
+    
+    .contact-form form {
+        display: block !important;
+        font-size: x-small!important;
+        padding: 0px ;
+        height: 110px !important;
+    }
+
+    .contact-form form button{
+        margin-top: 0px !important;
+    }
+    
+    .contact-info {
+        font-size: 10px !important;
+    }
+
+    .contact-info h2{
+        font-size: 20px !important;
+    }
+
+    .footer {
+        height: 110px !important;
+        margin-bottom: 0px !important;
+        margin-left: 10% !important;
+    }
+
+    .footer h3 {
+        font-size: 10px !important;
+    }
+}
+
 
 
