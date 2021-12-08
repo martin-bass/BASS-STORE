@@ -7,11 +7,10 @@ async function funcionCascaron (){
     await cargarProductos();
 };
 
-async function cargarProductos (){  //Levantamos los archivos del JSON y pintamos los cards
+async function cargarProductos (){  //Levantamos el archivo JSON y pintamos los cards en el DOM
     await $.getJSON(archivoJson, 
         function (data, textStatus) {
             if (textStatus==="success"){
-                
                 productos=data;
                 for (producto of productos) {
                     
@@ -33,6 +32,7 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                     );
 
                     //ESTABLECEMOS CATEGORIAS PARA CADA TIPO DE PRODUCTO
+                    //Esto permite luego aplicar filtros por categoría
                     if (producto.producto==="Bajo"){
                         $(`#${producto.id}`).addClass("Bajo");
                     } else if (producto.producto==="Amplificador"){
@@ -41,9 +41,10 @@ async function cargarProductos (){  //Levantamos los archivos del JSON y pintamo
                         $(`#${producto.id}`).addClass("Accesorio")
                     };
                     
-                    let indice= `${producto.id}`;
+                    let indice= `${producto.id}`;   //Con esta variable pasamos el "id" de cada producto a las diferentes funciones
                 
-                    $(`#btn${producto.id}`).click((e)=> {   //Boton para agregar productos
+                    //BOTON PARA AGREGAR LOS PROCUTOS AL CARRITO
+                    $(`#btn${producto.id}`).click((e)=> {   
                     e.preventDefault();
                     eleccionBajo(indice);
                     
@@ -86,14 +87,15 @@ function eleccionBajo(ind) {     //Genera un objeto con el producto seleccionado
         };
     };
     
-    productosDelCarrito.push(pdCarrito);
-    validarRepeticion(pdCarrito);
+    productosDelCarrito.push(pdCarrito);    //Guardamos el prodcuto en un array (carrito)
+    validarRepeticion(pdCarrito);           //Verificamos que ese prodcuto no se guarde dos veces
     carrito.incrementarCarrito();
     
     return pdCarrito
 };
 
 function validarRepeticion(obj) {
+    //Esta funcion se encarga de verificar que un producto no se guarde dos veces. La idea es que si un producto ya esta en el carrito, se modifique la cantidad desde el mismo carrito. Sin necesidad de guardar nuevamente el mismo.
     let contadorRepeticiones= 0;
     
     for (let i=0; i< productosDelCarrito.length; i++) {
@@ -110,7 +112,6 @@ function validarRepeticion(obj) {
                 allowOutsideClick: "true",
                 customClass: "SeewAlert"
             });
-            
             productosDelCarrito.splice(i,1);
             carrito.decrementarCarrito();
             vaAlDOM=false;
@@ -121,7 +122,7 @@ function validarRepeticion(obj) {
     };
 };
 
-function infoEnElDom() {    //Aqui se genera un obj al que vamos a poder manipular sus cantidades
+function infoEnElDom() {    //Aqui pintamos en el DOM cada productos seleccionado
      $("#cont-sidebar").prepend(
         `<ol id="${pdCarrito.id}" class="list-group prod-seleccionado${pdCarrito.id}">
             <li class="list-group-item d-flex align-items-start">
@@ -199,15 +200,15 @@ function eliminarDelCarrito(valor, elimina) {        //Elimina elementos de carr
     };
 };
 
-function eliminarDelArray(num) {
-    for (let i=0; i < productosDelCarrito.length; i++){   //Elimina el prod del array de compras
+function eliminarDelArray(num) {        //Elimina el prod del array de compras
+    for (let i=0; i < productosDelCarrito.length; i++){   
         if (productosDelCarrito[i].id == num) {
             productosDelCarrito.splice(i,1);
             break;
         };
     };
 
-    let sidebar= document.getElementById("cont-sidebar");  // Se segura que si el contenedor esta vacio se elimine el array de compras
+    let sidebar= document.getElementById("cont-sidebar");  // Se segura que, si el contenedor esta vacío, se elimine el array de compras
     if (sidebar.hasChildNodes()==false){
         productosDelCarrito=[];
         carrito.resetearCarrito();
@@ -234,7 +235,7 @@ function agregarAlCarrito (){       //Funcion para agregar el listado final al L
 
 //****************FUNCIONES FINALIZAR COMPRA******************************************
 
-function sumaFinal (){
+function sumaFinal (){      //Suma el total de los prodcutos del carrito de compras
     agregarAlCarrito()
     
     let total = 0;
@@ -245,7 +246,7 @@ function sumaFinal (){
     return parseFloat(total)
 };
 
-function sumarEnvio(){
+function sumarEnvio(){      //Función que permite agregar el costo de envío ($2000)
     let envio= document.getElementById("envio")
     let compraFinal;
     if (envio.checked==false) {
@@ -257,7 +258,7 @@ function sumarEnvio(){
     return compraFinal
 };
 
-function mostrarCompraFinal (){
+function mostrarCompraFinal (){     //Esta función muestra un resumen de la compra, permite elegir el medio de pago y confirmar la compra final.
     let aPagar= document.getElementById("compraFinalizada");
     let ul= document.createElement('ul');
     aPagar.appendChild(ul);

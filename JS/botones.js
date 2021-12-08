@@ -1,4 +1,4 @@
-//ACCIONES EN BOTONES
+//********************************ACCIONES EN BOTONES********************************************
 $("#logo").click(function (e) { e.preventDefault();});
 
 $("#Nosotros").click(function (e) { 
@@ -21,7 +21,6 @@ $("#Productos").click( (e) => {
     $('html,body').animate({
         scrollTop:$('#SeccionCards').offset().top
     },300);
-    
 });
 
 $("#Bajos").click( (e)=> { 
@@ -30,7 +29,6 @@ $("#Bajos").click( (e)=> {
     $('html,body').animate({
         scrollTop:$('#SeccionCards').offset().top
     },300);
-    
 });
 
 $("#Amplificadores").click( (e) =>{ 
@@ -39,7 +37,6 @@ $("#Amplificadores").click( (e) =>{
     $('html,body').animate({
         scrollTop:$('#SeccionCards').offset().top
     },300);
-    
 });
 
 $("#Accesorios").click( (e)=> { 
