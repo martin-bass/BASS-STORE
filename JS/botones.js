@@ -75,6 +75,7 @@ $(".btn-ConfirmarCompra").click( (e) =>{
         $(".compraFinal").css({"display":"flex"});
         sumaFinal();
         mostrarCompraFinal();
+        $(".btn-ConfirmarCompra").attr("disabled", "");
     };
 });
 
@@ -83,6 +84,7 @@ $("#back").click( (e)=> {
     $(".compraFinal").css({"display":"none"});
     limpiarContenedor();
     localStorage.clear();
+    $(".btn-ConfirmarCompra").removeAttr("disabled");
 });
 
 $(".finalizada").click( (e)=> { 
@@ -93,12 +95,14 @@ $(".finalizada").click( (e)=> {
         html: '<p class="p-sweetAlert">A la brevedad estarás disfrutando de tu pedido.</p>',
         background: '#777',
         position:'center',
-        allowOutsideClick: true
+        allowOutsideClick: false
     });
     $(".compraFinal").css({"display":"none"});
     document.getElementById("compraFinalizada").innerHTML=""
     limpiarCarritoEnDOM();
     localStorage.clear();
+    $("#sidebar").css({"right":"-450px"}).toggle(500);
+    $(".btn-ConfirmarCompra").removeAttr("disabled");
 });
 
 $("#enviaFormulario").click( (e)=> { 

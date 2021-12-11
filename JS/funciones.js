@@ -45,14 +45,19 @@ async function cargarProductos (){  //Levantamos el archivo JSON y pintamos los 
                 
                     //BOTON PARA AGREGAR LOS PROCUTOS AL CARRITO
                     $(`#btn${producto.id}`).click((e)=> {   
-                    e.preventDefault();
-                    eleccionBajo(indice);
-                    
-                    if (vaAlDOM){
-                        infoEnElDom();
-                    };
-                    
-                    mensaje(e, indice);
+                        e.preventDefault();
+                        eleccionBajo(indice);
+                        
+                        if (vaAlDOM){
+                            infoEnElDom();
+                        };
+                        
+                        mensaje(e, indice);
+
+                        let sidebar= document.getElementById("sidebar");
+                        if (sidebar.style.display=="none" || sidebar.style.display==""){
+                            $("#sidebar").css({"right":"0px"}).toggle(500);
+                        };
                     });
                 };
             };
@@ -122,7 +127,7 @@ function validarRepeticion(obj) {
     };
 };
 
-function infoEnElDom() {    //Aqui pintamos en el DOM cada productos seleccionado
+function infoEnElDom() {    //Aquí pintamos en el DOM cada productos seleccionado
      $("#cont-sidebar").prepend(
         `<ol id="${pdCarrito.id}" class="list-group prod-seleccionado${pdCarrito.id}">
             <li class="list-group-item d-flex align-items-start">
@@ -224,7 +229,7 @@ function limpiarCarritoEnDOM (){
 
 function mensaje(valor, ind){        // Muestra un mensaje cada vez que se agrega un producto
     $(`#msjAgregado${ind}`).append('<p class="mensaje">Producto agregado!</p>');
-    $(valor.target.parentNode.parentNode.childNodes[7].children).fadeOut(2000)
+    $(valor.target.parentNode.parentNode.childNodes[7].children).fadeOut(3000)
 };
 
 function agregarAlCarrito (){       //Funcion para agregar el listado final al Local Storage
@@ -293,7 +298,7 @@ function validarFurmlario() {
             html: '<p class="p-sweetAlert">Debes completar todos los campos.</p>',
             background: '#777',
             position:'center',
-            allowOutsideClick: true
+            allowOutsideClick: false
         });
     }else if (!(/^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email))) {
         Swal.fire({
@@ -302,7 +307,7 @@ function validarFurmlario() {
             html: '<p class="p-sweetAlert">Introduce un correo válido.</p>',
             background: '#777',
             position:'center',
-            allowOutsideClick: "true",
+            allowOutsideClick: false,
             customClass: "SeewAlert"
         });
     }else {
@@ -312,7 +317,7 @@ function validarFurmlario() {
             html: '<p class="p-sweetAlert">Su mensaje ha sido enviado!\nA la brevedad te responderemos</p>',
             background: '#777',
             position:'center',
-            allowOutsideClick: "true",
+            allowOutsideClick: false,
             customClass: "SeewAlert"
         });
         document.getElementById("form").reset();
