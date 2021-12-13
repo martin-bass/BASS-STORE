@@ -127,7 +127,7 @@ function validarRepeticion(obj) {
     };
 };
 
-function infoEnElDom() {    //Aquí pintamos en el DOM cada productos seleccionado
+function infoEnElDom() {    //Aquí pintamos en el DOM cada producto seleccionado
      $("#cont-sidebar").prepend(
         `<ol id="${pdCarrito.id}" class="list-group prod-seleccionado${pdCarrito.id}">
             <li class="list-group-item d-flex align-items-start">

@@ -4,7 +4,7 @@ $("#logo").click(function (e) { e.preventDefault();});
 $("#Nosotros").click(function (e) { 
     e.preventDefault();
     $('html,body').animate({
-        scrollTop:$('#SeccionCarousel').offset()
+        scrollTop:$('#SeccionCarousel').offset().top
     },300);
 });
 

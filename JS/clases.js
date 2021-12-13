@@ -21,7 +21,7 @@ class prodDelCarrito {
             this.cantidad-=1;
         };
         return this.cantidad;
-    }
+    };
     
     agregar () {
         if (this.agregado === false){
