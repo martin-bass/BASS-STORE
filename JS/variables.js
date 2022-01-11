@@ -1,8 +1,7 @@
 //VARIABLES GLOBALES
-const archivoJson= "/productos.json";
+const archivoJson= "Productos/productos.json";
 let productos;
 let productosDelCarrito = [];
-let producto;
 let pdCarrito;
 let carrito= new Carrito();
 let vaAlDOM=false;
