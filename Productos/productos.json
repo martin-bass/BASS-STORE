@@ -109,7 +109,7 @@
     "marca": "Rickenbacker", 
     "modelo": "4003 MBL", 
     "precio": 150000,
-    "imagen":"/img/cards/rickenbacker.png"},
+    "imagen":"img/cards/rickenbacker.png"},
 
     {"id": 16,
     "producto": "Amplificador",
