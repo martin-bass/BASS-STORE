@@ -4,7 +4,7 @@
     "marca": "Fender", 
     "modelo": "Jazz Bass", 
     "precio": 100000,
-    "imagen": "/img/cards/fender-jazz-bass.png"},
+    "imagen": "cards/fender-jazz-bass.png"},
 
     {"id": 1,
     "producto": "Bajo",
